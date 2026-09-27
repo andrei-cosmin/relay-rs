@@ -1,0 +1,17 @@
+[package]
+name = "relay-tunnel"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+relay-core = { path = "../relay-core" }
+dioxus-fullstack = { version = "0.7.10", default-features = false }
+async-trait = { version = "0.1", optional = true }
+axum = { version = "0.8", optional = true }
+dioxus-server = { version = "0.7.10", optional = true }
+futures-util = { version = "0.3", optional = true }
+tokio = { version = "1", features = ["io-util", "macros", "process", "sync", "time"], optional = true }
+
+[features]
+server = ["relay-core/server", "dioxus-fullstack/server", "dep:async-trait", "dep:axum", "dep:dioxus-server", "dep:futures-util", "dep:tokio"]
+web = ["dioxus-fullstack/web"]

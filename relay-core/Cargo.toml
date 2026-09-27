@@ -1,0 +1,17 @@
+[package]
+name = "relay-core"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+http = "1"
+serde = { version = "1", features = ["derive"] }
+async-trait = { version = "0.1", optional = true }
+axum = { version = "0.8", optional = true }
+futures-util = { version = "0.3", optional = true }
+ron = { version = "0.12", optional = true }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal", "sync"], optional = true }
+tokio-stream = { version = "0.1", features = ["sync"], optional = true }
+
+[features]
+server = ["dep:async-trait", "dep:axum", "dep:futures-util", "dep:ron", "dep:tokio", "dep:tokio-stream"]

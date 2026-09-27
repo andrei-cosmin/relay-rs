@@ -1,0 +1,5 @@
+[application]
+name = "relay"
+
+[web.app]
+title = "Relay-RS"

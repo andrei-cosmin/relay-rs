@@ -1,0 +1,72 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test --workspace --features relay-server/server
+
+  build:
+    needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            name: linux-x86_64
+          - os: ubuntu-24.04-arm
+            name: linux-aarch64
+          - os: macos-15
+            name: macos-aarch64
+          - os: macos-15-intel
+            name: macos-x86_64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: dioxus-cli@0.7.10
+      - name: build
+        run: dx bundle --package relay-server --platform web --fullstack --release
+      - name: package
+        run: |
+          mkdir -p package/relay
+          cp target/dx/relay/release/web/server package/relay/relay
+          cp -R target/dx/relay/release/web/public package/relay/public
+          cp -R deploy package/relay/deploy
+          tar -C package -czf relay-${{ matrix.name }}.tar.gz relay
+      - uses: actions/upload-artifact@v7
+        with:
+          name: relay-${{ matrix.name }}
+          path: relay-${{ matrix.name }}.tar.gz
+
+  release:
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: relay-*
+          path: artifacts
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            artifacts/*.tar.gz
+            deploy/install.sh

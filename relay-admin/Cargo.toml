@@ -1,0 +1,12 @@
+[package]
+name = "relay-admin"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+async-trait = "0.1"
+axum = "0.8"
+dioxus-cli-config = "0.7.10"
+relay-core = { path = "../relay-core", features = ["server"] }
+tokio = { version = "1", features = ["net"] }
+tower-http = { version = "0.7", features = ["fs", "set-header"] }

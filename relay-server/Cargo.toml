@@ -1,0 +1,45 @@
+[package]
+name = "relay-server"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "relay"
+path = "src/main.rs"
+
+[dependencies]
+dioxus = { version = "0.7.10", default-features = false, features = ["launch"] }
+relay-ui = { path = "../relay-ui" }
+axum = { version = "0.8", optional = true }
+dioxus-server = { version = "0.7.10", optional = true }
+futures-util = { version = "0.3", optional = true }
+relay-admin = { path = "../relay-admin", optional = true }
+relay-core = { path = "../relay-core", features = ["server"], optional = true }
+relay-monitor = { path = "../relay-monitor", features = ["server"], optional = true }
+relay-proxy = { path = "../relay-proxy", optional = true }
+relay-settings = { path = "../relay-settings", features = ["server"], optional = true }
+relay-storage = { path = "../relay-storage", optional = true }
+relay-targets = { path = "../relay-targets", features = ["server"], optional = true }
+relay-tunnel = { path = "../relay-tunnel", features = ["server"], optional = true }
+relay-vpn = { path = "../relay-vpn", features = ["server"], optional = true }
+rustls-graviola = { version = "0.4", optional = true }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"], optional = true }
+
+[features]
+web = ["dioxus/web", "dioxus/devtools", "relay-ui/web"]
+server = [
+    "dep:axum",
+    "dep:dioxus-server",
+    "dep:futures-util",
+    "dep:relay-admin",
+    "dep:relay-core",
+    "dep:relay-monitor",
+    "dep:relay-proxy",
+    "dep:relay-settings",
+    "dep:relay-storage",
+    "dep:relay-targets",
+    "dep:relay-tunnel",
+    "dep:relay-vpn",
+    "dep:rustls-graviola",
+    "dep:tokio",
+]

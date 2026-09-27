@@ -1,0 +1,12 @@
+[package]
+name = "relay-proxy"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+async-trait = "0.1"
+axum = "0.8"
+http-body = "1"
+relay-core = { path = "../relay-core", features = ["server"] }
+reqwest = { version = "0.13", default-features = false, features = ["rustls-no-provider", "socks", "stream", "http2"] }
+tokio = { version = "1", features = ["net"] }
