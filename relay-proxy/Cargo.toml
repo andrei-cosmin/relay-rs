@@ -1,0 +1,17 @@
+[package]
+name = "relay-proxy"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum = "0.8"
+haze = { git = "https://github.com/andrei-cosmin/haze-rs", tag = "v0.8.0", features = ["server"] }
+http-body = "1"
+relay-core = { path = "../relay-core", features = ["server"] }
+relay-monitor = { path = "../relay-monitor", features = ["server"] }
+relay-storage = { path = "../relay-storage", features = ["server"] }
+relay-targets = { path = "../relay-targets", features = ["server"] }
+relay-vpn = { path = "../relay-vpn", features = ["server"] }
+reqwest = { version = "0.13", default-features = false, features = ["rustls-no-provider", "socks", "stream", "http2"] }
+tokio = { version = "1", features = ["net", "rt"] }
+tracing = "0.1"

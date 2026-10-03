@@ -1,0 +1,18 @@
+[package]
+name = "relay-tunnel"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+dioxus-fullstack = { version = "0.7.10", default-features = false }
+dioxus-server = { version = "0.7.10", optional = true }
+futures-util = { version = "0.3", optional = true }
+serde = { version = "1", features = ["derive"] }
+haze = { git = "https://github.com/andrei-cosmin/haze-rs", tag = "v0.8.0" }
+tokio = { version = "1", features = ["io-util", "macros", "process", "rt", "sync", "time"], optional = true }
+tracing = { version = "0.1", optional = true }
+
+[features]
+server = ["dioxus-fullstack/server", "dep:dioxus-server", "dep:futures-util", "dep:tokio", "dep:tracing", "haze/server"]
+web = ["dioxus-fullstack/web"]
+standalone = ["haze/standalone"]

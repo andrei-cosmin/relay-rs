@@ -1,0 +1,38 @@
+[package]
+name = "relay-server"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "relay"
+path = "src/main.rs"
+
+[dependencies]
+dioxus = { version = "0.7.10", default-features = false, features = ["launch"] }
+relay-ui = { path = "../relay-ui" }
+anyhow = { version = "1", optional = true }
+haze = { git = "https://github.com/andrei-cosmin/haze-rs", tag = "v0.8.0", optional = true }
+relay-core = { path = "../relay-core", features = ["server"], optional = true }
+relay-monitor = { path = "../relay-monitor", features = ["server"], optional = true }
+relay-proxy = { path = "../relay-proxy", optional = true }
+relay-settings = { path = "../relay-settings", features = ["server"], optional = true }
+relay-targets = { path = "../relay-targets", features = ["server"], optional = true }
+relay-tunnel = { path = "../relay-tunnel", features = ["server"], optional = true }
+relay-vpn = { path = "../relay-vpn", features = ["server"], optional = true }
+rustls-graviola = { version = "0.4", optional = true }
+
+[features]
+web = ["dioxus/web", "dioxus/devtools", "relay-ui/web"]
+server = [
+    "dep:anyhow",
+    "dep:haze",
+    "haze/server",
+    "dep:relay-core",
+    "dep:relay-monitor",
+    "dep:relay-proxy",
+    "dep:relay-settings",
+    "dep:relay-targets",
+    "dep:relay-tunnel",
+    "dep:relay-vpn",
+    "dep:rustls-graviola",
+]
