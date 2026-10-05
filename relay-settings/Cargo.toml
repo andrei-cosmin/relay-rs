@@ -1,0 +1,22 @@
+[package]
+name = "relay-settings"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+relay-tunnel = { path = "../relay-tunnel" }
+dioxus-fullstack = { version = "0.7.10", default-features = false }
+serde = { version = "1", features = ["derive"] }
+dioxus-server = { version = "0.7.10", optional = true }
+relay-core = { path = "../relay-core", optional = true }
+relay-proxy = { path = "../relay-proxy", optional = true }
+relay-storage = { path = "../relay-storage", optional = true }
+ron = { version = "0.12", optional = true }
+haze = { git = "https://github.com/andrei-cosmin/haze-rs", tag = "v0.8.0" }
+tokio = { version = "1", features = ["rt", "time"], optional = true }
+
+[features]
+backend = ["relay-tunnel/backend", "dep:ron", "dep:relay-core", "relay-core/backend", "dep:relay-proxy", "dep:relay-storage", "relay-storage/backend", "dep:tokio"]
+server = ["backend", "relay-tunnel/server", "dioxus-fullstack/server", "dep:dioxus-server", "haze/server"]
+web = ["dioxus-fullstack/web", "relay-tunnel/web"]
+standalone = ["backend", "relay-tunnel/standalone", "haze/standalone"]

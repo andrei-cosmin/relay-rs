@@ -1,0 +1,14 @@
+[package]
+name = "relay-storage"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+relay-core = { path = "../relay-core" }
+serde = { version = "1", features = ["derive"] }
+redb = { version = "4", optional = true }
+ron = { version = "0.12", optional = true }
+postcard = { version = "1", features = ["alloc"], optional = true }
+
+[features]
+backend = ["relay-core/backend", "dep:redb", "dep:ron", "dep:postcard"]

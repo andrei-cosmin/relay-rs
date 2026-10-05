@@ -1,0 +1,25 @@
+[package]
+name = "relay-monitor"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+relay-core = { path = "../relay-core" }
+dioxus-fullstack = { version = "0.7.10", default-features = false }
+serde = { version = "1", features = ["derive"] }
+axum = { version = "0.8", optional = true }
+dioxus-server = { version = "0.7.10", optional = true }
+futures-util = { version = "0.3", optional = true }
+http-body = { version = "1", optional = true }
+relay-storage = { path = "../relay-storage" }
+tokio = { version = "1", features = ["time"], optional = true }
+tracing = { version = "0.1", optional = true }
+haze = { git = "https://github.com/andrei-cosmin/haze-rs", tag = "v0.8.0" }
+humantime = "2.4.0"
+bytesize = "2.7.0"
+
+[features]
+backend = ["relay-core/backend", "dep:axum", "dep:futures-util", "dep:http-body", "relay-storage/backend", "dep:tokio", "dep:tracing"]
+server = ["backend", "dioxus-fullstack/server", "dep:dioxus-server", "haze/server"]
+web = ["dioxus-fullstack/web"]
+standalone = ["backend", "haze/standalone"]

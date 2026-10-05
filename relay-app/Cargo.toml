@@ -1,0 +1,54 @@
+[package]
+name = "relay-app"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "relay"
+path = "src/main.rs"
+
+[dependencies]
+dioxus = { version = "0.7.10", default-features = false, features = ["launch"] }
+relay-ui = { path = "../relay-ui" }
+anyhow = { version = "1", optional = true }
+dirs = { version = "7", optional = true }
+haze ={ git = "https://github.com/andrei-cosmin/haze-rs", tag = "v0.8.0", optional = true }
+relay-core = { path = "../relay-core", optional = true }
+relay-monitor = { path = "../relay-monitor", optional = true }
+relay-proxy = { path = "../relay-proxy", optional = true }
+relay-settings = { path = "../relay-settings", optional = true }
+relay-targets = { path = "../relay-targets", optional = true }
+relay-tunnel = { path = "../relay-tunnel", optional = true }
+relay-vpn = { path = "../relay-vpn", optional = true }
+rustls-graviola = { version = "0.4", optional = true }
+
+[features]
+web = ["dioxus/web", "dioxus/devtools", "relay-ui/web"]
+server = [
+    "dep:anyhow",
+    "haze/server",
+    "relay-core/backend",
+    "relay-monitor/server",
+    "dep:relay-proxy",
+    "relay-settings/server",
+    "relay-targets/server",
+    "relay-tunnel/server",
+    "relay-vpn/server",
+    "dep:rustls-graviola",
+]
+standalone = [
+    "dioxus/desktop",
+    "dioxus/logger",
+    "dep:anyhow",
+    "dep:dirs",
+    "haze/standalone",
+    "relay-core/backend",
+    "relay-monitor/standalone",
+    "dep:relay-proxy",
+    "relay-settings/standalone",
+    "relay-targets/standalone",
+    "relay-tunnel/standalone",
+    "relay-ui/standalone",
+    "relay-vpn/standalone",
+    "dep:rustls-graviola",
+]
