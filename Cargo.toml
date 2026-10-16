@@ -1,0 +1,16 @@
+[workspace]
+resolver = "3"
+members = ["relay-app", "relay-core", "relay-monitor", "relay-proxy", "relay-settings", "relay-storage", "relay-targets", "relay-tunnel", "relay-ui", "relay-vpn"]
+
+[workspace.lints.clippy]
+redundant_clone = "warn"
+needless_collect = "warn"
+or_fun_call = "warn"
+format_push_string = "warn"
+implicit_clone = "warn"
+inefficient_to_string = "warn"
+format_collect = "warn"
+assigning_clones = "warn"
+needless_pass_by_value = "warn"
+unnecessary_to_owned = "warn"
+redundant_allocation = "warn"

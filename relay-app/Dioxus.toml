@@ -1,0 +1,10 @@
+[application]
+name = "relay"
+
+[web.app]
+title = "Relay-RS"
+
+[bundle]
+identifier = "rs.relay.app"
+publisher = "Relay-RS"
+external_bin = ["relay-app/bin/cloudflared", "relay-app/bin/wireproxy"]
